@@ -1,0 +1,15 @@
+{
+  "name": "wbm-snapshots",
+  "version": "0.0.1",
+  "description": "Retrieve a snapshot list from Archive.org’s Wayback Machine",
+  "main": "index.js",
+  "scripts": {},
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "cheerio": "~0.10.3",
+    "request": "~2.12.0",
+    "optimist": "~0.3.5"
+  }
+}

@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+var wbmSnapshots = require('../');
+var prepareCells = require('../lib/cells');
+var argv = require('optimist').argv;
+
+function printResultWithCells(allSnapshots) {
+  var cells = prepareCells('–', '|');
+  for (var i=0; i < allSnapshots.length; i++) {
+    cells.add([
+      'Date: ' + allSnapshots[i].date,
+      'URL:  ' + allSnapshots[i].url
+    ]);
+  }
+  cells.end();
+}
+
+function printResults(allSnapshots) {
+  for (var i=0; i < allSnapshots.length; i++) {
+    console.log('Date: ' + allSnapshots[i].date + "\n" +
+                'URL:  ' + allSnapshots[i].url + "\n");
+  }
+}
+
+function displayFinalResult(allSnapshots, withCells) {
+  console.log('Found ' + allSnapshots.length + ' snapshots.' + "\n\n");
+  
+  if (withCells) {
+    printResultWithCells(allSnapshots);
+  } else {
+    printResults(allSnapshots);
+  }
+}
+
+if (argv._.length < 1) {
+  console.log('Please provide a website, e.g.: ./wbm-snapshots http://example.org');
+  return;
+}
+
+console.log('Retrieving snapshots for ' + argv._[0] + '...' + "\n");
+
+wbmSnapshots(argv._[0], function(allSnapshots){
+  displayFinalResult(allSnapshots, argv.sexy !== false);
+});
